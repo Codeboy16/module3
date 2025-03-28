@@ -1,6 +1,6 @@
 # MERN Stack Document Approval System
 
-![Logo](./path/to/your/logo.png)
+![Logo](https://upload.wikimedia.org/wikipedia/commons/9/94/MERN-logo.png)
 
 ## Tech Stack
 
@@ -41,7 +41,7 @@ In case any of the roles **Rejects** the document, the user is not able to resub
 ### Clone the Repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Codeboy16/module3.git
 cd <project-folder>
 npm install
 npm run dev   //to Start The Font-end
