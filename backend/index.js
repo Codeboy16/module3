@@ -1,13 +1,15 @@
 import express from 'express';
 import 'dotenv/config'
+import cors from 'cors';
 const app = express();
-
+app.use(cors()); 
 app.get("/", (req, res) => {
     res.send("Home Page");
     });
 app.get("/about", (req, res) => {
     res.send([
         {
+        "id":1,    
         "name":"Rohit Singh",
         "age": 21,
         "college": "SRM University",
@@ -16,6 +18,7 @@ app.get("/about", (req, res) => {
         "skills": ["JavaScript", "Python", "Java", "C++"],
     },
     {
+        "id":2,
         "name":"Rohan Roy",
         "age": 21,
         "college": "SRM University",
@@ -24,6 +27,7 @@ app.get("/about", (req, res) => {
         "skills": ["JavaScript", "Python", "Java", "C++"],
     },
     {
+        "id":3,
         "name":"Jyoti Gupta",
         "age": 25,
         "college": "SRM University",
@@ -32,6 +36,7 @@ app.get("/about", (req, res) => {
         "skills": ["JavaScript"],
     },
     {
+        "id":4,
         "name":"Manish Baitha",
         "age": 23,
         "college": "SRM University",
@@ -43,7 +48,7 @@ app.get("/about", (req, res) => {
     });
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log("Server is running on port 3000");
+    console.log(`Server is running on port ${process.env.PORT || 3000}`);
     
     }
 );    
