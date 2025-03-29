@@ -61,10 +61,18 @@ const Login = () => {
                     {item.skills.join(" / ")}
                   </p>
                 </div>
-
-                <a href="#" class="btn btn-primary mx-auto">
-                  Go somewhere
+                 <span className="flex ">
+                 <a href="#" class="btn btn-danger mx-auto">
+                  Reject
                 </a>
+                <a href="#" class="btn btn-warning mx-auto">
+                  Return
+                </a>
+                <a href="#" class="btn btn-success mx-auto">
+                  Forward
+                </a>
+                 </span>
+
               </div>
             </div>
           );
