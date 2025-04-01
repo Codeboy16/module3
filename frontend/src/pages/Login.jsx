@@ -67,7 +67,6 @@ const Login = () => {
                   </p>
                 </div>
                  <span className="flex ">
-<<<<<<< HEAD
                  <a href="#" class="btn btn-danger mx-auto px-3">
                   Reject
                 </a>
@@ -75,15 +74,6 @@ const Login = () => {
                   Return
                 </a>
                 <a href="#" class="btn btn-success mx-auto px-3">
-=======
-                 <a href="#" class="btn btn-danger mx-auto px-3" onClick={()=>{alert("Rejected "+item.id)}}>
-                  Reject
-                </a>
-                <a href="#" class="btn btn-warning mx-auto px-3" onClick={()=>{alert("Return "+item.id)}}>
-                  Return
-                </a>
-                <a href="#" class="btn btn-success mx-auto px-3" onClick={()=>{alert("Forwarded "+item.id)}}>
->>>>>>> ea2927181775ebc2b3f55881f56d6b928528b831
                   Forward
                 </a>
                  </span>
