@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "motion/react"
 const Login = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -17,13 +18,17 @@ const Login = () => {
   return (
     <div>
       <h1 className="text-center my-2">Login Page</h1>
-      <div className="flex m-3 justify-center flex-wrap">
+      <div className="flex m-3 justify-center flex-wrap ">
         {data.map((item) => {
           return (
-            <div
-              className="card flex m-3"
+            <motion.div
+              className="card flex m-3 shadow"
               style={{ width: "20rem" }}
               key={item.id}
+              initial={{ opacity: 0, scale: 0.5 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              exit={{ opacity: 0, scale: 0.5 }} 
+              transition={{ duration: 0.7, ease: "easeIn" }}
             >
               <img src="./images/photo.png" class="card-img-top" alt="..." />
               <div class="card-body">
@@ -62,19 +67,19 @@ const Login = () => {
                   </p>
                 </div>
                  <span className="flex ">
-                 <a href="#" class="btn btn-danger mx-auto">
+                 <a href="#" class="btn btn-danger mx-auto px-3">
                   Reject
                 </a>
-                <a href="#" class="btn btn-warning mx-auto">
+                <a href="#" class="btn btn-warning mx-auto px-3">
                   Return
                 </a>
-                <a href="#" class="btn btn-success mx-auto">
+                <a href="#" class="btn btn-success mx-auto px-3">
                   Forward
                 </a>
                  </span>
 
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
