@@ -1,11 +1,15 @@
 import express from 'express';
 import 'dotenv/config'
 import cors from 'cors';
+import Login from './routes/login.js';
 const app = express();
 app.use(cors()); 
-app.get("/", (req, res) => {
-    res.send("Back-End Code ");
-    });
+app.use(express.json()); // Middleware to parse JSON request body
+
+app.get("/", (req, res) => {res.send("Back-End Code ")});
+app.use("/login",Login)
+
+
 app.get("/about", (req, res) => {
     res.send([
         {
