@@ -62,13 +62,13 @@ const Login = () => {
                   </p>
                 </div>
                  <span className="flex ">
-                 <a href="#" class="btn btn-danger mx-auto">
+                 <a href="#" class="btn btn-danger mx-auto px-3" onClick={()=>{alert("Rejected "+item.id)}}>
                   Reject
                 </a>
-                <a href="#" class="btn btn-warning mx-auto">
+                <a href="#" class="btn btn-warning mx-auto px-3" onClick={()=>{alert("Return "+item.id)}}>
                   Return
                 </a>
-                <a href="#" class="btn btn-success mx-auto">
+                <a href="#" class="btn btn-success mx-auto px-3" onClick={()=>{alert("Forwarded "+item.id)}}>
                   Forward
                 </a>
                  </span>
