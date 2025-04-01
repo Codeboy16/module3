@@ -4,7 +4,7 @@ import cors from 'cors';
 const app = express();
 app.use(cors()); 
 app.get("/", (req, res) => {
-    res.send("Home Page");
+    res.send("Back-End Code ");
     });
 app.get("/about", (req, res) => {
     res.send([
@@ -29,7 +29,7 @@ app.get("/about", (req, res) => {
     {
         "id":3,
         "name":"Jyoti Gupta",
-        "age": 25,
+        "age": 16,
         "college": "SRM University",
         "branch": "I.T",
         "hobbies": ["Cooking", "talking", "gaming"],
