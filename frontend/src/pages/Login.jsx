@@ -1,7 +1,9 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const {
@@ -10,76 +12,120 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    // try {
-    //   const response = await axios.post('https://your-api-url.com/login', data);
-    //   console.log(response.data);
-    //   alert('Login Successful');
-    // } catch (err) {
-    //   alert('Invalid credentials. Please try again.');
-    // }
-    console.log(data);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 flex items-center justify-center p-4">
-      <motion.div
-        className="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md border border-gray-200"
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <div className="text-center mb-6">
-          <img src="images/logo.png" alt="Govt. of Sikkim" className="w-28 h-28 mx-auto" />
-          <h2 className="text-2xl font-bold text-gray-800 mt-4">Government of Sikkim</h2>
-          <p className="text-gray-500 text-sm">Secure Login Portal</p>
-        </div>
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://your-api-endpoint.com/login",
+        data
+      );
+      toast.success("Login successful!");
+      console.log(response.data);
+    } catch (error) {
+      toast.error("Login failed. Please check your credentials.");
+      console.error(error);
+    }
+    console.log(data)
+  };
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              {...register('email', { required: 'Email is required' })}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition duration-300 ${
-                errors.email ? 'border-red-500' : 'focus:ring-green-500'
-              }`}
-            />
+  useEffect(() => {
+    document.title = "Login - Government of Sikkim";
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="flex items-center justify-center min-h-screen bg-gray-100 px-4 sm:px-0"
+    >
+      <motion.div
+        initial={{ scale: 0.9 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white p-6 sm:p-9 rounded-lg shadow-lg w-full max-w-md"
+      >
+        <div className="flex items-center justify-center flex-col gap-4 mb-3">
+          <img className="size-24 sm:size-46" src="./images/logo.png" alt="" />
+          <div className="flex flex-col justify-center items-center text-center">
+            <h2 className="text-xl sm:text-2xl font-bold">
+              Government of Sikkim
+            </h2>
+            <p className="text-zinc-400 font-semibold text-sm sm:text-[1.1rem]">
+              Secure Login Portal
+            </p>
+          </div>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-4 relative">
+            <div className="relative">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full px-3 py-2 border rounded-lg pr-10"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Invalid email address",
+                  },
+                })}
+              />
+              <FaEnvelope className="absolute right-3 top-3 text-gray-500" />
+            </div>
             {errors.email && (
               <p className="text-red-500 text-sm">{errors.email.message}</p>
             )}
           </div>
 
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              {...register('password', { required: 'Password is required' })}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition duration-300 ${
-                errors.password ? 'border-red-500' : 'focus:ring-green-500'
-              }`}
-            />
+          <div className="mb-4 relative">
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full px-3 py-2 border rounded-lg pr-10"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                  pattern: {
+                    value: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+                    message:
+                      "Must include letters, numbers, and special characters",
+                  },
+                })}
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 top-3 text-gray-500"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 text-sm">{errors.password.message}</p>
             )}
           </div>
 
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             type="submit"
-            className="w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 shadow-md text-4xl"
+            className="w-full bg-blue-500 text-white py-2 rounded-sm hover:bg-blue-600"
           >
             Login
-          </button>
+          </motion.button>
         </form>
-
-        <p className="text-center text-gray-400 text-sm mt-4">
-          Forgot password?{' '}
-          <a href="#" className="text-green-500 hover:underline">
-            Reset here
-          </a>
-        </p>
       </motion.div>
-    </div>
+    </motion.div>
   );
 };
 
