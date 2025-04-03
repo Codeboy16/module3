@@ -1,8 +1,11 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
 
 const Approver = () => {
   return (
-    <div>Approver</div>
+    <div>
+      <Navbar title="Approver" />
+    </div>
   )
 }
 

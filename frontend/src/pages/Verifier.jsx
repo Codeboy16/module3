@@ -1,8 +1,11 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
 
 const Verifier = () => {
   return (
-    <div>Verifier</div>
+    <div>
+      <Navbar title="Verifier" />
+    </div>
   )
 }
 

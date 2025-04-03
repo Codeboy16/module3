@@ -4,7 +4,7 @@ const router = express.Router();
 
 const authMiddlewaker = (req, res, next) => {
      const {email, password} = req.body;
-     const data = {email:"rs1644818@gmail.com",password:"12345678"};
+     const data = {email:"operator@gmail.com",password:"12345678"};
      if(email===data.email && password===data.password){
       const token = jwt.sign({ email: data.email, role: "operator" }, 'secretKey', { expiresIn: '1h' });
       res.status(200).json({
