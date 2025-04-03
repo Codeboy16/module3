@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";  // Import ToastContainer for global usage
 import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Alert from '@mui/material/Alert';
@@ -14,6 +14,7 @@ const Login = () => {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState("");  // To manage login error state
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -22,20 +23,23 @@ const Login = () => {
       toast.error("Please fix the errors before submitting.");
       return;
     }
+
     console.log(data);
     try {
       const response = await axios.post("http://localhost:8080/login", data);
       console.log(response.data.message);
-      if(response.status === 200) {
+      if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("role", response.data.role);
-        alert(response.data.message);
+        localStorage.setItem("role",response.data.role);
+        toast.success("Login successful! Welcome back.");
       }
-    }catch(error) {
-      toast.error("Invalid email or password. Please try again.");
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Invalid email or password. Please try again.";
+      toast.error(errorMessage); // Set the error state to display the MUI alert
       console.error("Login error:", error);
     }
   };
+
   useEffect(() => {
     document.title = "Login - Government of Sikkim";
   }, []);
@@ -55,9 +59,11 @@ const Login = () => {
       >
         <div className="flex flex-col items-center gap-2 mb-2 text-center">
           <img className="w-24 sm:w-32 drop-shadow-lg" src="/images/logo.png" alt="Government of Sikkim" />
-          <h3 className="text-2xl font-bold">Government of Sikkim<br/>I.T Department</h3>
+          <h3 className="text-2xl font-bold">Government of Sikkim<br />I.T Department</h3>
           <p className="text-gray-500 font-medium text-sm">Secure Login Portal</p>
         </div>
+
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="relative">
             <input
@@ -92,7 +98,7 @@ const Login = () => {
               onClick={togglePasswordVisibility}
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 focus:outline-none"
             >
-              {showPassword ? <FaEyeSlash className="text-lg"/> : <FaEye className="text-lg"/>}
+              {showPassword ? <FaEyeSlash className="text-lg" /> : <FaEye className="text-lg" />}
             </button>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
           </div>
@@ -104,14 +110,17 @@ const Login = () => {
           >
             Login
           </motion.button>
+
           <p className="text-center text-gray-500 text-sm pt-3">
             Forget Password?{" "}
             <a href="#" className="text-blue-600 hover:underline">
               Reset here
-            </a>  
+            </a>
           </p>
         </form>
       </motion.div>
+
+      <ToastContainer /> {/* Add ToastContainer to render toasts globally */}
     </motion.div>
   );
 };
