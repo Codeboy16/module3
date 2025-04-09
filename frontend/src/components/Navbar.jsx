@@ -7,6 +7,7 @@ import Reject from "./Reject";
 import { Avatar } from "@mui/material"; // Material UI Avatar for a modern user profile
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import Logo from "../../public/images/logo.png"; // Adjust the path as necessary
+import ChangePassword from "./ChangePassword";
 const Navbar = (props) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
@@ -28,7 +29,7 @@ const Navbar = (props) => {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Left Side: Sidebar */}
-      <div className="w-60 md:w-80  min-h-fit text-white p-6 flex flex-col items-start shadow-lg border-r border-gray-200"  style={{ backgroundColor: roleColor }}>
+      <div className="w-60 md:w-[22rem]  min-h-fit text-white p-6 flex flex-col items-start shadow-lg border-r border-gray-200"  style={{ backgroundColor: roleColor }}>
         {/* Logo and Title */}
         <div className="w-full flex flex-col items-center justify-center mb-4">
           <img src={Logo} alt="Logo" className="w-32 md:w-52 mb-4 mx-auto pb-2 pt-3" />
@@ -59,13 +60,19 @@ const Navbar = (props) => {
             to={`/${role}/accept`}
             className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
-            Accept
+            Total Accepted
           </Link>
           <Link
             to={`/${role}/reject`}
             className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
-            Reject
+            Total Rejected
+          </Link>
+          <Link
+            to={`/${role}/changepassword`}
+            className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
+          >
+            Change Password
           </Link>
         </nav>
 
@@ -86,6 +93,8 @@ const Navbar = (props) => {
           <Route path="/applications" element={<Applications />} />
           <Route path="/accept" element={<Accept />} />
           <Route path="/reject" element={<Reject />} />
+          <Route path="/changepassword" element={<ChangePassword/>} />
+          <Route path="/*" element={<h1 className="text-center">404 Not Found Page</h1>} />
         </Routes>
       </div>
     </div>
