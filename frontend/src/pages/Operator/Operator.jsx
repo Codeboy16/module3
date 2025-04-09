@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
-import Navbar from '../components/Navbar';
-import Profile from '../components/Profile';
+import Navbar from '../../components/Navbar';
+import Profile from '../../components/Profile';
 import { Outlet } from 'react-router-dom';
 const Operator = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook

@@ -6,23 +6,32 @@ import Accept from "./Accept";
 import Reject from "./Reject";
 import { Avatar } from "@mui/material"; // Material UI Avatar for a modern user profile
 import { deepOrange, deepPurple } from '@mui/material/colors';
+import Logo from "../../public/images/logo.png"; // Adjust the path as necessary
 const Navbar = (props) => {
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
+  let roleColor = '#0d6efd';
+  if(role=="operator"){
+    roleColor = '#37b8b4'
+  }else if(role=="approver"){
+    roleColor = '#20c997'
+  }
 
   // Handle Logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     navigate("/"); // Navigate to the login page (or homepage)
+    window.location.reload();
   };
 
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Left Side: Sidebar */}
-      <div className="w-60 md:w-80  h-full bg-[#37b8b4] text-white p-6 flex flex-col items-start shadow-lg border-r border-gray-200">
+      <div className="w-60 md:w-80  min-h-fit text-white p-6 flex flex-col items-start shadow-lg border-r border-gray-200"  style={{ backgroundColor: roleColor }}>
         {/* Logo and Title */}
         <div className="w-full flex flex-col items-center justify-center mb-4">
-          <img src="images/logo.png" alt="Logo" className="w-32 md:w-52 mb-4 mx-auto pb-2 pt-3" />
+          <img src={Logo} alt="Logo" className="w-32 md:w-52 mb-4 mx-auto pb-2 pt-3" />
           <h5 className="text-center text-black">Government of Sikkim<br/>I.T Department</h5>
           <h3 className="text-2xl font-semibold text-center text-black mx-auto">--{props.title}--</h3>
         </div>
@@ -35,25 +44,25 @@ const Navbar = (props) => {
         {/* Navigation Links */}
         <nav className="w-full flex flex-col space-y-4">
           <Link
-            to="/profile"
+            to={`/${role}/profile`}
             className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Profile
           </Link>
           <Link
-            to="/applications"
+            to={`/${role}/applications`}
             className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Applications
           </Link>
           <Link
-            to="/accept"
+            to={`/${role}/accept`}
             className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Accept
           </Link>
           <Link
-            to="/reject"
+            to={`/${role}/reject`}
             className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Reject
@@ -72,6 +81,7 @@ const Navbar = (props) => {
       {/* Right Side: Main Content */}
       <div className="flex-1 p-6 bg-gray-100 overflow-y-auto">
         <Routes>
+          <Route path="/" element={<Profile />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/applications" element={<Applications />} />
           <Route path="/accept" element={<Accept />} />

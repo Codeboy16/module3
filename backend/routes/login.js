@@ -14,7 +14,22 @@ const authMiddlewaker = (req, res, next) => {
       });
       // res.json({ token });
       // next();
-     }else{
+     }else if(email==="verifier@gmail.com" && password==="12345678"){
+      const token = jwt.sign({ email: data.email, role: "operator" }, 'secretKey', { expiresIn: '1h' });
+      res.status(200).json({
+        message: "Login successful!",
+        token,
+        role: "verifier"
+      });
+     }else if(email==="approver@gmail.com" && password==="12345678"){
+      const token = jwt.sign({ email: data.email, role: "operator" }, 'secretKey', { expiresIn: '1h' });
+      res.status(200).json({
+        message: "Login successful!",
+        token,
+        role: "approver"
+      });
+     }
+     else{
       res.status(400).json({ message: 'Invalid credentials' });
      }
     if(!email || !password){
