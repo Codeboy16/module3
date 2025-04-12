@@ -8,15 +8,34 @@ import { Avatar } from "@mui/material"; // Material UI Avatar for a modern user 
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import Logo from "../../public/images/logo.png"; // Adjust the path as necessary
 import ChangePassword from "./ChangePassword";
+import PageNotFound from "./PageNotFound";
+import { jwtDecode } from "jwt-decode";
 const Navbar = (props) => {
   const navigate = useNavigate();
-  const role = localStorage.getItem("role");
-  let roleColor = '#0d6efd';
-  if(role=="operator"){
-    roleColor = '#37b8b4'
-  }else if(role=="approver"){
-    roleColor = '#20c997'
+  const token = localStorage.getItem("token");
+
+  let role = null;
+  let isAuthenticated = false;
+  if (token && typeof token === 'string') {
+    try {
+      const decoded = jwtDecode(token);
+      console.log("Decoded token:", decoded);
+      role = decoded.role;
+      isAuthenticated = true;
+    } catch (err) {
+      console.error("Invalid token:", err.message);
+    }
   }
+
+const roleColorMap = {
+  operator: '#37b8b4',
+  approver: '#20c997',
+  verifier: '#0d6efd',
+  default: ''
+};
+
+const roleColor = roleColorMap[role] || roleColorMap.default;
+
 
   // Handle Logout
   const handleLogout = () => {
@@ -94,7 +113,7 @@ const Navbar = (props) => {
           <Route path="/accept" element={<Accept />} />
           <Route path="/reject" element={<Reject />} />
           <Route path="/changepassword" element={<ChangePassword/>} />
-          <Route path="/*" element={<h1 className="text-center">404 Not Found Page</h1>} />
+          <Route path="/*" element={<PageNotFound/>} />
         </Routes>
       </div>
     </div>

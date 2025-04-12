@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";  // Import ToastContaine
 import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Alert from '@mui/material/Alert';
-
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
   const {
     register,
@@ -25,15 +25,23 @@ const Login = () => {
     }
 
     console.log(data);
+    let role = null;
+    let isAuthenticated = false;
     try {
       const response = await axios.post("http://localhost:8080/login", data);
       console.log(response.data.message);
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("role",response.data.role);
-        const path = localStorage.getItem("role")
-        toast.success("Login successful! Welcome back.");
-        window.location.href = path; 
+        const token = response.data.token
+        localStorage.setItem("token", token);
+        if (token && typeof token === 'string') {
+          const decoded = jwtDecode(token);
+          role = decoded.role;
+          isAuthenticated=true
+        }
+          toast.success("Login successful! Welcome back.");
+          window.location.href = `/${role}`; // redirect based on role
+        // toast.success("Login successful! Welcome back.");
+        // window.location.href = role; 
       }
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Invalid email or password. Please try again.";

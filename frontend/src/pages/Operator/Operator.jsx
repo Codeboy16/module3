@@ -1,23 +1,39 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import Navbar from '../../components/Navbar';
 import Profile from '../../components/Profile';
 import { Outlet } from 'react-router-dom';
+
 const Operator = () => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const isAuthenticated = localStorage.getItem("token");
-    if (!isAuthenticated) {
-      navigate("/"); // Redirect to home page if not authenticated
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
     }
-    document.title = "Gov of Sikkim - Operator"; // Set the document title
-  }, [navigate]); // Only re-run the effect if `navigate` changes (although it won't)
+
+    try {
+      const decoded = jwtDecode(token);
+      if (decoded.role !== 'operator') {
+        // If role is not operator, redirect to the correct dashboard or login
+        navigate(`/${decoded.role || ''}`);
+      }
+    } catch (err) {
+      console.error("Token error:", err.message);
+      navigate("/login"); // If token is invalid, redirect to login
+    }
+
+    document.title = "Gov of Sikkim - Operator";
+  }, [navigate]);
 
   return (
     <div>
       <Navbar title="Operator" />
-      <Outlet/>
+      <Outlet />
     </div>
   );
 };
