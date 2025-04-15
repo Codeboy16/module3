@@ -5,6 +5,7 @@ import Operator from './pages/Operator/Operator';
 import Verifier from './pages/Verifier/Verifier';
 import Approver from './pages/Approver/Approver';
 import PageNotFound from './components/PageNotFound';
+import ApplicationsDetails from './components/ApplicationsDetails';
 import { jwtDecode } from "jwt-decode";
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="/" element={!isAuthenticated ? <Login /> : <Navigate to={`/${role}`} />} />
         <Route path="/login" element={!isAuthenticated ? <Login /> : <Navigate to={`/${role}`} />} />
         <Route path={`/${role}/*`} element={Component} />
+        <Route path={`/${role}/applications/:id`} element={<ApplicationsDetails/>} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>

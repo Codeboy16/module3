@@ -5,7 +5,7 @@ import Applications from "./Applications";
 import Accept from "./Accept";
 import Reject from "./Reject";
 import { Avatar } from "@mui/material"; // Material UI Avatar for a modern user profile
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import { deepOrange, deepPurple } from "@mui/material/colors";
 import Logo from "../../public/images/logo.png"; // Adjust the path as necessary
 import ChangePassword from "./ChangePassword";
 import PageNotFound from "./PageNotFound";
@@ -16,7 +16,7 @@ const Navbar = (props) => {
 
   let role = null;
   let isAuthenticated = false;
-  if (token && typeof token === 'string') {
+  if (token && typeof token === "string") {
     try {
       const decoded = jwtDecode(token);
       console.log("Decoded token:", decoded);
@@ -27,15 +27,14 @@ const Navbar = (props) => {
     }
   }
 
-const roleColorMap = {
-  operator: '#37b8b4',
-  approver: '#20c997',
-  verifier: '#0d6efd',
-  default: ''
-};
+  const roleColorMap = {
+    operator: "#37b8b4",
+    approver: "#20c997",
+    verifier: "#0d6efd",
+    default: "",
+  };
 
-const roleColor = roleColorMap[role] || roleColorMap.default;
-
+  const roleColor = roleColorMap[role] || roleColorMap.default;
 
   // Handle Logout
   const handleLogout = () => {
@@ -48,12 +47,25 @@ const roleColor = roleColorMap[role] || roleColorMap.default;
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Left Side: Sidebar */}
-      <div className="w-60 md:w-[22rem]  min-h-fit text-white p-6 flex flex-col items-start shadow-lg border-r border-gray-200"  style={{ backgroundColor: roleColor }}>
+      <div
+        className="w-60 md:w-[22rem]  min-h-fit text-white p-6 flex flex-col items-start shadow-lg border-r border-gray-200"
+        style={{ backgroundColor: roleColor }}
+      >
         {/* Logo and Title */}
         <div className="w-full flex flex-col items-center justify-center mb-4">
-          <img src={Logo} alt="Logo" className="w-32 md:w-52 mb-4 mx-auto pb-2 pt-3" />
-          <h5 className="text-center text-black">Government of Sikkim<br/>I.T Department</h5>
-          <h3 className="text-2xl font-semibold text-center text-black mx-auto">--{props.title}--</h3>
+          <img
+            src={Logo}
+            alt="Logo"
+            className="w-32 md:w-52 mb-4 mx-auto pb-2 pt-3"
+          />
+          <h5 className="text-center text-black">
+            Government of Sikkim
+            <br />
+            I.T Department
+          </h5>
+          <h3 className="text-2xl font-semibold text-center text-black mx-auto">
+            --{props.title}--
+          </h3>
         </div>
 
         {/* User Profile */}
@@ -112,8 +124,8 @@ const roleColor = roleColorMap[role] || roleColorMap.default;
           <Route path="/applications" element={<Applications />} />
           <Route path="/accept" element={<Accept />} />
           <Route path="/reject" element={<Reject />} />
-          <Route path="/changepassword" element={<ChangePassword/>} />
-          <Route path="/*" element={<PageNotFound/>} />
+          <Route path="/changepassword" element={<ChangePassword />} />
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </div>
     </div>

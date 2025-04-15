@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import Navbar from '../../components/Navbar';
-import Profile from '../../components/Profile';
-import { Outlet } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import Navbar from "../../components/Navbar";
+import Profile from "../../components/Profile";
+import { Outlet } from "react-router-dom";
 
 const Operator = () => {
   const navigate = useNavigate();
@@ -18,9 +18,9 @@ const Operator = () => {
 
     try {
       const decoded = jwtDecode(token);
-      if (decoded.role !== 'operator') {
+      if (decoded.role !== "operator") {
         // If role is not operator, redirect to the correct dashboard or login
-        navigate(`/${decoded.role || ''}`);
+        navigate(`/${decoded.role || ""}`);
       }
     } catch (err) {
       console.error("Token error:", err.message);

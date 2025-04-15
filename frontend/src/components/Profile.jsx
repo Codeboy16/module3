@@ -7,16 +7,16 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
   let role = null;
-  if (token && typeof token === 'string') {
-      const decoded = jwtDecode(token);
-      role = decoded.role;
-      console.log("Profile role ",role);
+  if (token && typeof token === "string") {
+    const decoded = jwtDecode(token);
+    role = decoded.role;
+    console.log("Profile role ", role);
   }
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await axios.post(
-          `http://localhost:8080/${role}`,
+          `${import.meta.env.VITE_PROFILE_KEY}${role}`,
           {},
           {
             headers: {
@@ -54,13 +54,21 @@ const Profile = () => {
                   src="/images/userProfile.png"
                   alt="User"
                   className="rounded-circle mb-4 border-3 border-primary mx-auto"
-                  style={{ width: "140px", height: "140px", objectFit: "cover" }}
+                  style={{
+                    width: "140px",
+                    height: "140px",
+                    objectFit: "cover",
+                  }}
                 />
 
                 {/* User Info */}
                 <h3 className="fw-bold mb-1">{userdata.name}</h3>
-                <p className="text-muted mb-2 text-xl font-medium">Role: {userdata.role}</p>
-                <p className="text-secondary mb-3">{userdata.description || "No description provided."}</p>
+                <p className="text-muted mb-2 text-xl font-medium">
+                  Role: {userdata.role}
+                </p>
+                <p className="text-secondary mb-3">
+                  {userdata.description || "No description provided."}
+                </p>
 
                 <div className="text-start">
                   <div className="mb-2">
@@ -76,7 +84,11 @@ const Profile = () => {
                       <strong>Website:</strong>
                       <div>
                         <a
-                          href={userdata.website.startsWith("http") ? userdata.website : `https://${userdata.website}`}
+                          href={
+                            userdata.website.startsWith("http")
+                              ? userdata.website
+                              : `https://${userdata.website}`
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
                         >
