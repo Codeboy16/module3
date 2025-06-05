@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify"; // Import ToastContainer for global usage
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 import { FaEye, FaEyeSlash, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Alert from "@mui/material/Alert";
 import { jwtDecode } from "jwt-decode";
+
 const Login = () => {
   const {
     register,
@@ -28,7 +30,10 @@ const Login = () => {
     let role = null;
     let isAuthenticated = false;
     try {
-      const response = await axios.post(`${import.meta.env.VITE_LOGIN_KEY}`, data);
+      const response = await axios.post(
+        `${import.meta.env.VITE_LOGIN_KEY}`,
+        data
+      );
       console.log(response.data.message);
       if (response.status === 200) {
         const token = response.data.token;
@@ -39,7 +44,7 @@ const Login = () => {
           isAuthenticated = true;
         }
         toast.success("Login successful! Welcome back.");
-       window.location.href = `/${role}`; // redirect based on role
+        window.location.href = `/${role}`; // redirect based on role
         // toast.success("Login successful! Welcome back.");
         // window.location.href = role;
       }
@@ -47,7 +52,7 @@ const Login = () => {
       const errorMessage =
         error.response?.data?.message ||
         "Invalid email or password. Please try again.";
-      toast.error(errorMessage); // Set the error state to display the MUI alert
+      toast.error(errorMessage);
       console.error("Login error:", error);
     }
   };
@@ -158,7 +163,17 @@ const Login = () => {
           </p>
         </form>
       </motion.div>
-      <ToastContainer /> {/* Add ToastContainer to render toasts globally */}
+
+      <ToastContainer // Toast container to render notifications globally
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </motion.div>
   );
 };
