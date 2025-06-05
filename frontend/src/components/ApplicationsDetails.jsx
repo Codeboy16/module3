@@ -1,21 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UserImage from "../../public/images/drink_coffee.gif";
+import axios from "axios";
 
 const ApplicationsDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [userData,setUserData] = useState([]);
 
+  useEffect(()=>{
+    async function getData(){
+       try{
+        const response = await axios.get(`${import.meta.env.VITE_APPLICATION_DETAIL}`);
+        setUserData(response.data[id-1])
+       }catch(error){
+          console.log("Error Of Getting UserDeatil ",error);
+       }
+    }
+      getData()
+  },[])
   const application = {
-    id: 1,
-    name: "Rohit Singh",
-    age: 21,
-    college: "SRM University",
-    branch: "I.T",
-    hobbies: ["coding", "reading", "gaming"],
-    skills: ["JavaScript", "Python", "Java", "C++"],
+    id: userData.id,
+    name: userData.name,
+    age: userData.age,
+    college: userData.college,
+    branch: userData.branch,
+    hobbies: userData.hobbies,
+    skills: userData.skills,
   };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-purple-100 to-pink-200 py-10 px-4">
       <div className="w-[90%] mx-auto bg-white border border-gray-200 shadow-2xl rounded-3xl p-8 sm:p-10 transition-all duration-500 animate-fade-in hover:shadow-purple-300 relative">
@@ -52,7 +64,7 @@ const ApplicationsDetails = () => {
               Hobbies 🎯
             </h3>
             <ul className="list-disc list-inside pl-4 text-gray-600 space-y-2 text-base sm:text-lg">
-              {application.hobbies.map((hobby, index) => (
+              {application.hobbies&&application.hobbies.map((hobby, index) => (
                 <li key={index}>{hobby}</li>
               ))}
             </ul>
@@ -67,7 +79,7 @@ const ApplicationsDetails = () => {
             Skills 💻
           </h3>
           <div className="flex flex-wrap gap-3">
-            {application.skills.map((skill, index) => (
+            {application.skills&&application.skills.map((skill, index) => (
               <span
                 key={index}
                 className="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm sm:text-base font-medium shadow-sm border border-blue-200 hover:bg-blue-200 transition"

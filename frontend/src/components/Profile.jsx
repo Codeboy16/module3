@@ -63,6 +63,7 @@ const Profile = () => {
 
                 {/* User Info */}
                 <h3 className="fw-bold mb-1">{userdata.name}</h3>
+                {localStorage.setItem("userRoleName", userdata.name)}
                 <p className="text-muted mb-2 text-xl font-medium">
                   Role: {userdata.role}
                 </p>

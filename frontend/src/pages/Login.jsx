@@ -39,7 +39,7 @@ const Login = () => {
           isAuthenticated = true;
         }
         toast.success("Login successful! Welcome back.");
-        window.location.href = `/${role}`; // redirect based on role
+       window.location.href = `/${role}`; // redirect based on role
         // toast.success("Login successful! Welcome back.");
         // window.location.href = role;
       }

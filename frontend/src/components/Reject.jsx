@@ -5,7 +5,7 @@ import UserProfile from "/images/userProfile.png";
 const TotalReject = ({ user }) => {
   return (
     <>
-      <div className="mt-6 max-w-sm md:max-w-96 lg:max-w-lg bg-white rounded-lg shadow-xl p-6 mx-4 hover:scale-103 transform transition duration-500 ease-in-out">
+      <div className="mt-6 min-w-sm md:min-w-xs lg:min-w-xs bg-white rounded-lg shadow-xl p-6 mx-4 hover:scale-103 transform transition duration-500 ease-in-out">
         <div className="flex justify-between mb-4">
           <h2 className="text-2xl font-semibold text-gray-900 roboto">{`#${user.id}`}</h2>
           <img src={UserProfile} className="w-12 h-12 mx-2" loading="lazy" />

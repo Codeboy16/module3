@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { FiAlignLeft,FiArrowLeftCircle  } from "react-icons/fi";
 import Profile from "./Profile";
 import Applications from "./Applications";
 import Accept from "./Accept";
@@ -13,7 +14,16 @@ import { jwtDecode } from "jwt-decode";
 const Navbar = (props) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-
+  const [userRoleName,setUserRoleName] = useState("");
+  const [menuOpen,setMenuOpen] = useState(false)
+  useEffect(()=>{
+    const storedName = localStorage.getItem('userRoleName');
+    if (storedName) {
+      setUserRoleName(storedName)
+    }
+      
+  },[])
+  // const userRoleName = localStorage.getItem("userRoleName");
   let role = null;
   let isAuthenticated = false;
   if (token && typeof token === "string") {
@@ -40,15 +50,28 @@ const Navbar = (props) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("userRoleName");
     navigate("/"); // Navigate to the login page (or homepage)
     window.location.reload();
   };
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 ">
       {/* Left Side: Sidebar */}
+      <div>
+        {
+          menuOpen
+          ?
+          <FiArrowLeftCircle className="md:hidden text-3xl absolute top-4 left-48"onClick={()=>{setMenuOpen(false)}}/>
+          :
+          <FiAlignLeft className="md:hidden text-4xl mt-4" onClick={()=>{setMenuOpen(true)}}/>
+        }
+       
+        {/* <FiArrowLeftCircle className="md:hidden text-6xl absolute top-5 "/> */}
+      </div>
+
       <div
-        className="w-60 md:w-[22rem]  min-h-fit text-white p-6 flex flex-col items-start shadow-lg border-r border-gray-200"
+        className={`w-60 md:w-[22rem]  min-h-fit text-white p-6 md:flex flex-col items-start shadow-lg border-r border-gray-200 ${menuOpen?'flex':'hidden'}`}
         style={{ backgroundColor: roleColor }}
       >
         {/* Logo and Title */}
@@ -70,8 +93,12 @@ const Navbar = (props) => {
 
         {/* User Profile */}
         <div className="w-full flex items-center justify-center mb-6 space-x-4 pb-4 border-b-4 border-black">
-          <Avatar sx={{ bgcolor: deepOrange[500] }}>RS</Avatar>
-          <span className="text-lg font-medium text-black">Rohit Singh</span>
+          <Avatar sx={{ bgcolor: deepOrange[400] }}>
+            {userRoleName ? userRoleName[0] + userRoleName[1]: "I.T"}
+          </Avatar>
+          <span className="text-lg font-medium text-black">{
+          userRoleName?userRoleName:"Department"
+          }</span>
         </div>
         {/* Navigation Links */}
         <nav className="w-full flex flex-col space-y-4">
