@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserProfile from "/images/userProfile.png";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TotalReject = ({ user }) => {
   return (
@@ -33,7 +35,13 @@ const TotalReject = ({ user }) => {
         </div>
 
         <div className="flex justify-center gap-1">
-          <button className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white font-semibold py-2 px-12 rounded-lg shadow-lg hover:bg-red-700  Rounded w-full">
+          <button className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white font-semibold py-2 px-12 rounded-lg shadow-lg hover:bg-red-700  Rounded w-full"
+          onClick={() => {
+                        toast.error(`#${user.id} Rejected Sucessfully `, {
+                          position: "bottom-right",
+                        });
+                      }}
+          >
             Rejected
           </button>
         </div>
@@ -58,6 +66,7 @@ const Reject = () => {
         {user.map((userData) => {
           return <TotalReject key={userData.id} user={userData} />;
         })}
+        <ToastContainer />
       </div>
     </>
   );

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UserProfile from "/images/userProfile.png";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const TotalAccept = ({ user }) => {
   return (
     <>
@@ -36,7 +37,9 @@ const TotalAccept = ({ user }) => {
           <button
             className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white font-semibold py-2 px-12 rounded-lg shadow-lg hover:bg-green-700  Rounded w-full"
             onClick={() => {
-              alert("Accepted Form Sucessfully " + user.id);
+              toast.success(`#${user.id} Accepted Sucessfully `, {
+                position: "bottom-right",
+              });
             }}
           >
             Accepted
@@ -63,6 +66,7 @@ const Accept = () => {
         {user.map((userData) => {
           return <TotalAccept key={userData.id} user={userData} />;
         })}
+        <ToastContainer />
       </div>
     </>
   );
