@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import UserProfile from "/images/userProfile.png";
 import { NavLink } from "react-router";
-
+import Document from "../../public/images/Aadharcardfrontpage.png";
 const TotalApplications = ({ user }) => {
   return (
     <>
@@ -19,34 +19,22 @@ const TotalApplications = ({ user }) => {
             <strong className="font-medium">Collage:</strong> {user.college}
           </p>
           <p className="text-gray-700 roboto">
-            <strong className="font-medium">Skills:</strong> {user.skills}
+            <strong className="font-medium">Skills:</strong> {user.skills.join(", ")}
           </p>
           {/* <p className="text-gray-700 roboto"><strong className="font-medium">Skills Matched:</strong> {user.skills.join(', ')}</p> */}
           <p className="text-gray-700 roboto">
-            <strong className="font-medium">Resume:</strong>
+            <strong className="font-medium">Document: </strong>
             <a
-              href={user.resume}
-              className="text-blue-600 underline hover:text-blue-800 transition duration-200"
+              href={Document}
+              className="text-blue-600 underline hover:text-blue-800 transition duration-200 hover:cursor-pointer"
             >
-              View Resume
+              View Document
             </a>
           </p>
         </div>
 
         <div className="flex justify-center">
-          {/* <button 
-          className="bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white font-semibold py-2 px-12 rounded-lg shadow-lg hover:bg-green-700  Rounded"
-           onClick={()=>{alert("Accepted Form Sucessfully "+user.id)}}
 
-        >
-          Accept
-        </button>
-        <button 
-          className="bg-gradient-to-r from-red-400 via-red-500 to-red-600 text-white font-semibold py-2 px-12 rounded-lg shadow-lg hover:bg-red-700  Rounded"
-          onClick={()=>{alert("Reject Form Sucessfully "+user.id)}}
-        >
-          Reject
-        </button> */}
           <NavLink to={`./${user.id}`} className="w-full">
             <button className="btn btn-primary min-w-full px-16">View</button>
           </NavLink>

@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import UserImage from "../../public/images/drink_coffee.gif";
+import UserImage from "../../public/images/Aadharcardfrontpage.png";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+
+
 
 const ApplicationsDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [userData,setUserData] = useState([]);
-
-  useEffect(()=>{
-    async function getData(){
-       try{
-        const response = await axios.get(`${import.meta.env.VITE_APPLICATION_DETAIL}`);
-        setUserData(response.data[id-1])
-       }catch(error){
-          console.log("Error Of Getting UserDeatil ",error);
-       }
+  const [userData, setUserData] = useState([]);
+  const [btnAction, setBtnAction] = useState(false);
+  useEffect(() => {
+    async function getData() {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_APPLICATION_DETAIL}`
+        );
+        setUserData(response.data[id - 1]);
+      } catch (error) {
+        console.log("Error Of Getting UserDeatil ", error);
+      }
     }
-      getData()
-  },[])
+    getData();
+  }, []);
   const application = {
     id: userData.id,
     name: userData.name,
@@ -34,7 +42,7 @@ const ApplicationsDetails = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="absolute right-4 bg-white border border-black rounded-full px-4 py-2 text-indigo-700 font-semibold text-sm sm:text-base shadow-md hover:bg-indigo-100 transition-all duration-300 Rounded "
+          className="hidden md:flex md:absolute right-4 bg-teal-500 border  rounded-full px-4 py-2 text-black font-semibold text-sm sm:text-base shadow-md hover:bg-teal-600 transition-all duration-300 Rounded "
         >
           ← Go Back
         </button>
@@ -58,19 +66,20 @@ const ApplicationsDetails = () => {
           </p>
         </div>
 
-        <div className="bg-purple-50 rounded-xl p-5 mb-6 shadow-inner flex justify-between px-6">
+        <div className="bg-purple-50 rounded-xl p-5 mb-6 shadow-inner flex flex-wrap justify-between px-6">
           <div>
             <h3 className="text-xl sm:text-2xl font-semibold text-purple-700 mb-3">
               Hobbies 🎯
             </h3>
             <ul className="list-disc list-inside pl-4 text-gray-600 space-y-2 text-base sm:text-lg">
-              {application.hobbies&&application.hobbies.map((hobby, index) => (
-                <li key={index}>{hobby}</li>
-              ))}
+              {application.hobbies &&
+                application.hobbies.map((hobby, index) => (
+                  <li key={index}>{hobby}</li>
+                ))}
             </ul>
           </div>
           <div>
-            <img src={UserImage} alt="User" className="w-auto h-52" />
+            <img src={UserImage} alt="User" className="w-auto h-72" />
           </div>
         </div>
 
@@ -79,25 +88,59 @@ const ApplicationsDetails = () => {
             Skills 💻
           </h3>
           <div className="flex flex-wrap gap-3">
-            {application.skills&&application.skills.map((skill, index) => (
-              <span
-                key={index}
-                className="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm sm:text-base font-medium shadow-sm border border-blue-200 hover:bg-blue-200 transition"
-              >
-                {skill}
-              </span>
-            ))}
+            {application.skills &&
+              application.skills.map((skill, index) => (
+                <span
+                  key={index}
+                  className="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm sm:text-base font-medium shadow-sm border border-blue-200 hover:bg-blue-200 transition"
+                >
+                  {skill}
+                </span>
+              ))}
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-6 mt-8">
-          <button className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 sm:py-4 rounded-xl shadow-md hover:shadow-green-400 text-3xl  sm:text-xl transition duration-300 Rounded">
+          <button
+            className="flex-1 bg-green-500 hover:bg-green-600 text-black font-bold py-3 sm:py-4 rounded-xl shadow-md hover:shadow-green-400 text-3xl  sm:text-xl transition duration-300 Rounded boxShadow "
+            disabled={btnAction}
+            onClick={() => {
+              toast.success(`#${id} Accepted Sucessfully `, {
+                position: "bottom-right",
+              });
+              setBtnAction(true);
+              handleOpen()
+            }}
+          >
             ✅ Accept
           </button>
-          <button className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 sm:py-4 rounded-xl shadow-md hover:shadow-red-400 text-3xl  sm:text-xl transition duration-300 Rounded">
+
+          <button
+            className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 sm:py-4 rounded-xl shadow-md hover:shadow-red-400 text-3xl  sm:text-xl transition duration-300 Rounded boxShadow"
+            disabled={btnAction}
+            onClick={() => {
+              toast.warning(`#${id} Return Sucessfully `, {
+                position: "bottom-right",
+              });
+              setBtnAction(true);
+            }}
+          >
+            &#x21a9; Return
+          </button>
+          <button
+            className="flex-1 bg-red-500 hover:bg-red-600 text-black font-bold py-3 sm:py-4 rounded-xl shadow-md hover:shadow-red-400 text-3xl  sm:text-xl transition duration-300 Rounded boxShadow"
+            disabled={btnAction}
+            onClick={() => {
+              toast.error(`#${id} Rejected Sucessfully `, {
+                position: "bottom-right",
+              });
+              setBtnAction(true);
+            }}
+          >
             ❌ Reject
           </button>
         </div>
+        <ToastContainer />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import axios from "axios";
 import UserProfile from "/images/userProfile.png";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Document from "../../public/images/Aadharcardfrontpage.png";
 
 const TotalReject = ({ user }) => {
   return (
@@ -24,12 +25,12 @@ const TotalReject = ({ user }) => {
             {user.skills.join(", ")}
           </p>
           <p className="text-gray-700 roboto">
-            <strong className="font-medium">Resume:</strong>
+            <strong className="font-medium">Document: </strong>
             <a
-              href={user.resume}
-              className="text-blue-600 underline hover:text-blue-800 transition duration-200"
+              href={Document}
+              className="text-blue-600 underline hover:text-blue-800 transition duration-200 hover:cursor-pointer"
             >
-              View Resume
+              View Document
             </a>
           </p>
         </div>

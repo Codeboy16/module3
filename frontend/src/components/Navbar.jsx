@@ -39,8 +39,8 @@ const Navbar = (props) => {
 
   const roleColorMap = {
     operator: "#37b8b4",
-    approver: "#20c997",
-    verifier: "#0d6efd",
+    approver: "#06b6d4",
+    verifier: "#38BDF8",
     default: "",
   };
 
@@ -104,31 +104,31 @@ const Navbar = (props) => {
         <nav className="w-full flex flex-col space-y-4">
           <Link
             to={`/${role}/profile`}
-            className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
+            className="py-2 text-xl font-medium text-black hover:bg-sky-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
-            Profile
+            User Profile
           </Link>
           <Link
             to={`/${role}/applications`}
-            className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
+            className="py-2 text-xl font-medium text-black hover:bg-sky-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Applications
           </Link>
           <Link
             to={`/${role}/accept`}
-            className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
+            className="py-2 text-xl font-medium text-black hover:bg-sky-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Total Accepted
           </Link>
           <Link
             to={`/${role}/reject`}
-            className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
+            className="py-2 text-xl font-medium text-black hover:bg-sky-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Total Rejected
           </Link>
           <Link
             to={`/${role}/changepassword`}
-            className="py-2 text-xl font-medium text-black hover:bg-indigo-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
+            className="py-2 text-xl font-medium text-black hover:bg-sky-700 hover:text-white w-full text-center rounded-md transition-all duration-300 noUnderline"
           >
             Change Password
           </Link>
@@ -137,7 +137,7 @@ const Navbar = (props) => {
         {/* Logout Button */}
         <button
           onClick={handleLogout}
-          className="mt-auto w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md text-center transition duration-300 Rounded"
+          className="mt-auto w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md text-center transition duration-300 font-bold Rounded"
         >
           Logout
         </button>
